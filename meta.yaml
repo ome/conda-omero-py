@@ -1,0 +1,59 @@
+{% set name = "omero-py" %}
+{% set version = "5.5.dev2" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}{{ environ.get('VERSION_SUFFIX', '') }}"
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: bd6f8e061e1dd43bcc75a83e7cca858ca82d0209ac79d9c170bd85d77c518dd7
+
+build:
+  noarch: python
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+  script_env:
+    - VERSION_SUFFIX
+
+requirements:
+  host:
+    - pip
+    - python =2.7
+  run:
+    - python =2.7
+    - zeroc-ice-python >=3.6.4,<3.7
+
+test:
+  commands:
+    - omero --help
+    - omero version
+  imports:
+    - omero
+    - omero.api
+    - omero.clients
+    - omero.cmd
+    - omero.constants
+    - omero.fs
+    - omero.gateway
+    - omero.grid
+    - omero.install
+    - omero.metadatastore
+    - omero.model
+    - omero.plugins
+    - omero.romio
+    - omero.sys
+    - omero.util
+    - omero_ext
+
+about:
+  home: https://www.openmicroscopy.org/
+  license: GNU General Public v2 or later (GPLv2+)
+  license_family: GPL2
+  summary: Python bindings to the OMERO.blitz server
+  doc_url: https://docs.openmicroscopy.org/latest/omero/developers
+  dev_url: https://github.com/ome/omero-py
+
+extra:
+  recipe-maintainers:
+    - ome
