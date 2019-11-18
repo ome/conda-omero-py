@@ -23,7 +23,7 @@ requirements:
   run:
     - future
     - python =3.6
-    - zeroc-ice-python >=3.6.5,<3.7
+    - zeroc-ice36-python
 
 test:
   commands:
