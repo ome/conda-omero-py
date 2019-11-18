@@ -11,7 +11,7 @@ matrix:
 env:
   global:
     - PACKAGE_NAME=omero-py
-    - REQUIREMENTS_CHANNEL=manics
+    - ANACONDA_USER="${TRAVIS_REPO_SLUG%/*}"
     - PATH="$HOME/miniconda/bin:$PATH"
 
 install:
@@ -31,18 +31,18 @@ script:
     else
       export VERSION_SUFFIX="";
     fi
-  - conda build -c ${REQUIREMENTS_CHANNEL} --python $PYTHON .
+  - conda build -c ${ANACONDA_USER} --python $PYTHON .
 
 deploy:
   - provider: script
     skip_cleanup: true
-    script: anaconda -t "$CONDA_UPLOAD_TOKEN" upload --user ${TRAVIS_REPO_SLUG%/*} $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2 --force -l testing
+    script: anaconda -t "$CONDA_UPLOAD_TOKEN" upload --user ${ANACONDA_USER} $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2 --force -l testing
     on:
       branch: master
       condition: "$TRAVIS_OS_NAME = linux"
   - provider: script
     skip_cleanup: true
-    script: anaconda -t "$CONDA_UPLOAD_TOKEN" upload --user ${TRAVIS_REPO_SLUG%/*} $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2
+    script: anaconda -t "$CONDA_UPLOAD_TOKEN" upload --user ${ANACONDA_USER} $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2
     on:
       tags: true
       condition: "$TRAVIS_OS_NAME = linux"
