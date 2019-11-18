@@ -19,10 +19,10 @@ build:
 requirements:
   host:
     - pip
-    - python =3.6
+    - python =3
   run:
     - future
-    - python =3.6
+    - python =3
     - zeroc-ice36-python
 
 test:
