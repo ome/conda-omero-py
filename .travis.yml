@@ -4,9 +4,9 @@ language: generic
 matrix:
   include:
     - os: linux
-      env: PYTHON=2.7
+      env: PYTHON=3.6
     - os: osx
-      env: PYTHON=2.7
+      env: PYTHON=3.6
 
 env:
   global:
@@ -36,13 +36,13 @@ script:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: anaconda -t $CONDA_UPLOAD_TOKEN upload $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2 --force -l testing
+    script: anaconda -t "$CONDA_UPLOAD_TOKEN" upload --user ${TRAVIS_REPO_SLUG%/*} $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2 --force -l testing
     on:
       branch: master
       condition: "$TRAVIS_OS_NAME = linux"
   - provider: script
     skip_cleanup: true
-    script: anaconda -t $CONDA_UPLOAD_TOKEN upload $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2
+    script: anaconda -t "$CONDA_UPLOAD_TOKEN" upload --user ${TRAVIS_REPO_SLUG%/*} $HOME/miniconda/conda-bld/noarch/$PACKAGE_NAME-*.tar.bz2
     on:
       tags: true
       condition: "$TRAVIS_OS_NAME = linux"
