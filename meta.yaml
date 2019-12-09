@@ -22,6 +22,8 @@ requirements:
     - python =3
   run:
     - future
+    - numpy
+    - pillow
     - python =3
     - zeroc-ice36-python
 
