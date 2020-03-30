@@ -25,6 +25,7 @@ requirements:
     - numpy
     - pillow
     - python =3
+    - pywin32  # [win]
     - zeroc-ice36-python
 
 test:
