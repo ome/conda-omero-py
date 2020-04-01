@@ -11,7 +11,7 @@ source:
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
   script_env:
     - VERSION_SUFFIX
@@ -25,6 +25,7 @@ requirements:
     - numpy
     - pillow
     - python =3
+    - pywin32  # [win]
     - zeroc-ice36-python
 
 test:
