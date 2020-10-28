@@ -13,7 +13,7 @@ build:
   # Can't use noarch because Windows requirements are different
   # If we remove pywin32 from OMERO.py we could switch to noarch
   # noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
   script_env:
     - VERSION_SUFFIX
