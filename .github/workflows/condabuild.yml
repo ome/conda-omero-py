@@ -53,7 +53,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: "${{ steps.condablddir.outputs.condabld }}/*-64/zeroc-*"
+          path: "${{ steps.condablddir.outputs.condabld }}/noarch/omero-py-*"
           if-no-files-found: error
   upload:
     needs: build
@@ -73,7 +73,7 @@ jobs:
       - name: Upload to Anaconda Cloud
         run: |
           anaconda whoami
-          for f in artifact/*/zeroc*; do
+          for f in artifact/zeroc* artifact/*/zeroc*; do
             anaconda upload --user ${ANACONDA_USER} $f
           done
         env:
