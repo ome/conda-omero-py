@@ -47,3 +47,35 @@ jobs:
             export VERSION_SUFFIX=""
           fi
           conda build -c ${{ env.channel }} --python ${{ matrix.python }} .
+      - name: List outputs
+        run: |
+          ls -R "${{ steps.condablddir.outputs.condabld }}"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: "${{ steps.condablddir.outputs.condabld }}/*-64/zeroc-*"
+          if-no-files-found: error
+  upload:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: setup-conda
+        uses: s-weigand/setup-conda@v1.0.5
+      - run: conda install -y -q anaconda-client
+
+      - name: Download artifacts from build
+        uses: actions/download-artifact@v2
+      - name: List artifacts
+        run: ls -R
+
+      - name: Upload to Anaconda Cloud
+        run: |
+          anaconda whoami
+          for f in artifact/*/zeroc*; do
+            anaconda upload --user ${ANACONDA_USER} $f
+          done
+        env:
+          ANACONDA_USER: ${{ secrets.ANACONDA_USER }}
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
