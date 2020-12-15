@@ -73,7 +73,7 @@ jobs:
       - name: Upload to Anaconda Cloud
         run: |
           anaconda whoami
-          for f in artifact/omero-py* artifact/*/omero-py*; do
+          for f in artifact/*/omero-py*; do
             anaconda upload --user ${ANACONDA_USER} $f
           done
         env:
