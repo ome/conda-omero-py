@@ -19,6 +19,7 @@ jobs:
         uses: s-weigand/setup-conda@v1.0.7
         with:
           python-version: ${{ matrix.python }}
+          update-conda: true
       - name: Set conda-bld output folder to make it easier to find artifacts
         id: condablddir
         # On Windows /conda-bld and \\conda-bld work here but fail later
