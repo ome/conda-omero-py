@@ -16,7 +16,7 @@ jobs:
       channel:  ome
     steps:
       - name: setup-conda
-        uses: s-weigand/setup-conda@v1.0.5
+        uses: s-weigand/setup-conda@v1.0.7
         with:
           python-version: ${{ matrix.python }}
       - name: Set conda-bld output folder to make it easier to find artifacts
